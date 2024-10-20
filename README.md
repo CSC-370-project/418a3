@@ -152,6 +152,8 @@ data <- data.frame(Variable = c("Income", "French Language"),
 #Produce table
 kable(data, caption = paste0("Descriptive statistics for selected ", 2016, " census variables"))
 ```
+![Alt text](https://github.com/CSC-370-project/418a3/blob/main/descStats.PNG)
+
 
 This R code creates two thematic maps using the tmap package, displaying different data for the census dissemination areas in Prince George. The code below compares median total income and the percentage of people with French knowledge in Prince George. 
 
@@ -235,6 +237,7 @@ IncomeBoth <- tm_shape(Income_noNA) + tm_borders(col="blue") +
 tmap_arrange(IncomeQueen, IncomeRook, IncomeBoth, ncol = 3, nrow = 1)
 
 ```
+![Description of Image](https://github.com/CSC-370-project/418a3/blob/main/neighborMap.png)
 
 The poly2nb() function will identify neighbouring polygons based on the queen weighting criteria. Next the neighbours list is converted into line segments representing connections between neighboring areas. This is done for both French knowledge and median income. 
 
@@ -419,8 +422,8 @@ map_LISA_French <- tm_shape(French_noNA) +
 # Plot maps in a 2 pane figure
 tmap_arrange(map_LISA_Income, map_LISA_French, ncol = 2, nrow = 1)
 ```
+![Description of Image](https://github.com/CSC-370-project/418a3/blob/main/localMoran.png)
 
-Explain the results.
 
 ### Income
 In the map, z-scores for income are clustered together which confirms the global Moran's $I$ results: that areas of high income are surrounded by other areas of high income. Similarly, areas of low income are surrounded by other areas of low income. 
@@ -437,6 +440,7 @@ Moran's $I$ scatter plots were produced using the following code:
 moran.plot(Income_noNA$`Median total income`, Income.lw, zero.policy=TRUE, spChk=NULL, labels=NULL, xlab="Median Total Income ($)", 
            ylab="Spatially Lagged Median Total Income ($)", quiet=NULL)
 ```
+![Description of Image](https://github.com/CSC-370-project/418a3/blob/main/scatterIncome.png)
 
 
 ```{r MoransIScatter2, echo=TRUE, eval=TRUE, warning=FALSE, fig.cap= "Moran's I scatter plot for percentage of respondants with knowledge of french."}
@@ -444,6 +448,7 @@ moran.plot(Income_noNA$`Median total income`, Income.lw, zero.policy=TRUE, spChk
 moran.plot(French_noNA$PercFrench, French.lw, zero.policy=TRUE, spChk=NULL, labels=NULL, xlab="Respondants with knowledge of French (%)", 
            ylab="Spatially Lagged knowledge of French (%)", quiet=NULL)
 ```
+![Description of Image](https://github.com/CSC-370-project/418a3/blob/main/scatter.png)
 
 
 In these plots the points with diamonds are statistically significant. For the income scatterplot, most points are clustered around the regression line and near the top left quadrant which means there is positive spatial correlation. While there are some points in the lower left, this still suggests positive spatial autocorrelation. For the French knowledge scatterplot, most points are moderately clustered around the lower left quandrant, which suggests positive spatial autocorrelation, with a specific trend. This supports the local Moran's $I$ results where high and low z-scores were clustered together and implies sharp demographic shifts and high diversity within the neighbourhood. 
