@@ -17,7 +17,7 @@ output:
 
 
 
-
+# Spatial Autocorrelation Tutorial
 
 
 ## Introduction
@@ -71,8 +71,6 @@ library(st)
 library(plyr)
 library(ggplot2)
 ```
-
-
 
 First the data is read by the R Studio script. The excel data is read by the built-in functions and the .shp is read using the st library. For an explanation of the data, see the introduction. Before executing this step, make sure all data is in the same directory as the .rmd file. In this example, the .shp and .csv is in a different directory from the .rmd.
 
@@ -152,7 +150,7 @@ data <- data.frame(Variable = c("Income", "French Language"),
 #Produce table
 kable(data, caption = paste0("Descriptive statistics for selected ", 2016, " census variables"))
 ```
-![Alt text](https://github.com/CSC-370-project/418a3/blob/main/descStats.PNG)
+![Table 1: Descriptive statistics for selected 2016 census variables](https://github.com/CSC-370-project/418a3/blob/main/descStats.PNG)
 
 
 This R code creates two thematic maps using the tmap package, displaying different data for the census dissemination areas in Prince George. The code below compares median total income and the percentage of people with French knowledge in Prince George. 
@@ -184,7 +182,8 @@ map_French <- tm_shape(French_noNA) +
 #Print maps side by side
 tmap_arrange(map_Income, map_French, ncol = 2, nrow = 1)
 ```
-![Alt text](https://github.com/CSC-370-project/418a3/blob/main/censusDisem.png)
+![Figure 1: Prince George census dissemination areas showing median total income (left) and percentage of
+respondants with knowledge of french (right)](https://github.com/CSC-370-project/418a3/blob/main/censusDisem.png)
 ## Neighbourhood matrix
 
 A weighted neighborhood matrix describes the relationship between geographic coordinates based on their proximity. Rows and columns in the matrix usually correspond to neighborhoods or census boundaries and the cells contain weight scales corresponding to the strength of the distance metric. The weights matrix also gives programmers control over the influence among neighbors. In queen weighting, all units sharing a boundary or a point have equal influence. In rook weighting only those sharing a boundary count in the calculation. In this tutorial the matrix is not explicitly shown, but is used to produce the map in figure 2. 
@@ -237,7 +236,8 @@ IncomeBoth <- tm_shape(Income_noNA) + tm_borders(col="blue") +
 tmap_arrange(IncomeQueen, IncomeRook, IncomeBoth, ncol = 3, nrow = 1)
 
 ```
-![Description of Image](https://github.com/CSC-370-project/418a3/blob/main/neighborMap.png)
+![Figure 2: Prince George census dissemination areas showing median total income neighbours queens weight
+(left) rooks weight (middle) and the combination of the two (right).](https://github.com/CSC-370-project/418a3/blob/main/neighborMap.png)
 
 The poly2nb() function will identify neighbouring polygons based on the queen weighting criteria. Next the neighbours list is converted into line segments representing connections between neighboring areas. This is done for both French knowledge and median income. 
 
@@ -422,7 +422,8 @@ map_LISA_French <- tm_shape(French_noNA) +
 # Plot maps in a 2 pane figure
 tmap_arrange(map_LISA_Income, map_LISA_French, ncol = 2, nrow = 1)
 ```
-![Description of Image](https://github.com/CSC-370-project/418a3/blob/main/localMoran.png)
+![Figure 3: Prince George census dissemination areas showing LISA z-scores for median total income (left) and
+percentage of respondents with knowledge of French (right)](https://github.com/CSC-370-project/418a3/blob/main/localMoran.png)
 
 
 ### Income
@@ -440,7 +441,7 @@ Moran's $I$ scatter plots were produced using the following code:
 moran.plot(Income_noNA$`Median total income`, Income.lw, zero.policy=TRUE, spChk=NULL, labels=NULL, xlab="Median Total Income ($)", 
            ylab="Spatially Lagged Median Total Income ($)", quiet=NULL)
 ```
-![Description of Image](https://github.com/CSC-370-project/418a3/blob/main/scatterIncome.png)
+![Figure 4: Moran’s I scatter plot for median total income](https://github.com/CSC-370-project/418a3/blob/main/scatterIncome.png)
 
 
 ```{r MoransIScatter2, echo=TRUE, eval=TRUE, warning=FALSE, fig.cap= "Moran's I scatter plot for percentage of respondants with knowledge of french."}
@@ -448,7 +449,7 @@ moran.plot(Income_noNA$`Median total income`, Income.lw, zero.policy=TRUE, spChk
 moran.plot(French_noNA$PercFrench, French.lw, zero.policy=TRUE, spChk=NULL, labels=NULL, xlab="Respondants with knowledge of French (%)", 
            ylab="Spatially Lagged knowledge of French (%)", quiet=NULL)
 ```
-![Description of Image](https://github.com/CSC-370-project/418a3/blob/main/scatter.png)
+![Figure 5: Moran’s I scatter plot for percentage of respondants with knowledge of French](https://github.com/CSC-370-project/418a3/blob/main/scatter.png)
 
 
 In these plots the points with diamonds are statistically significant. For the income scatterplot, most points are clustered around the regression line and near the top left quadrant which means there is positive spatial correlation. While there are some points in the lower left, this still suggests positive spatial autocorrelation. For the French knowledge scatterplot, most points are moderately clustered around the lower left quandrant, which suggests positive spatial autocorrelation, with a specific trend. This supports the local Moran's $I$ results where high and low z-scores were clustered together and implies sharp demographic shifts and high diversity within the neighbourhood. 
