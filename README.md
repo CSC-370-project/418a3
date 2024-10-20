@@ -1,22 +1,3 @@
----
-output:
-  pdf_document: default
-  html_document: default
----
-
-
----
-title: "Spatial Autocorrelation Tutorial"
-author: "Geog 418"
-date: "`r format(Sys.time(), '%B %d, %Y')`"
-output:
-  pdf_document: default
-  word_document: default
----
-
-
-
-
 # Spatial Autocorrelation Tutorial
 
 
