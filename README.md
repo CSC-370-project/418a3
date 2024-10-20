@@ -182,7 +182,7 @@ map_French <- tm_shape(French_noNA) +
 #Print maps side by side
 tmap_arrange(map_Income, map_French, ncol = 2, nrow = 1)
 ```
-
+![Alt text](https://github.com/CSC-370-project/418a3/blob/main/censusDisem.png)
 ## Neighbourhood matrix
 
 A weighted neighborhood matrix describes the relationship between geographic coordinates based on their proximity. Rows and columns in the matrix usually correspond to neighborhoods or census boundaries and the cells contain weight scales corresponding to the strength of the distance metric. The weights matrix also gives programmers control over the influence among neighbors. In queen weighting, all units sharing a boundary or a point have equal influence. In rook weighting only those sharing a boundary count in the calculation. In this tutorial the matrix is not explicitly shown, but is used to produce the map in figure 2. 
